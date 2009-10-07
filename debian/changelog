@@ -1,0 +1,6 @@
+python-alarm (0.1-0maemo1) unstable; urgency=low
+
+  * Initial release of alarmd bindings as a standalone package
+
+ -- Lauro Moura <lauro.neto@openbossa.org>  Wed, 07 Oct 2009 19:17:40 -0300
+

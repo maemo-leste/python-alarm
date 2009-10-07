@@ -1,0 +1,15 @@
+Source: python-alarm
+Priority: optional
+Section: python
+Maintainer: PyMaemo Team <pymaemo-developers@garage.maemo.org>
+Build-Depends: debhelper (>= 4.0.0), cdbs, cython, python-dev, python-central, libalarm-dev
+XS-Python-Version: all
+Standards-Version: 3.6.1
+
+Package: python-alarm
+Architecture: any
+Provides: python2.5-alarm
+Replaces: python2.5-alarm
+Depends: ${shlibs:Depends}
+XB-Python-Version: all
+Description: Python bindings for libalarm library
