@@ -158,6 +158,64 @@ cdef class Action(Wrapper):
         def __set__(self, alarmactionflags value):
             self._obj().flags = value
 
+    property interface:
+        def __get__(self):
+            return alarm_action_get_dbus_interface(self._obj())
+        def __set__(self, char* value):
+            alarm_action_set_dbus_interface(self._obj(), value)
+
+    property service:
+        def __get__(self):
+            return alarm_action_get_dbus_service(self._obj())
+        def __set__(self, char* value):
+            alarm_action_set_dbus_service(self._obj(), value)
+
+    property path:
+        def __get__(self):
+            return alarm_action_get_dbus_path(self._obj())
+        def __set__(self, char* value):
+            alarm_action_set_dbus_path(self._obj(), value)
+
+    property name:
+        def __get__(self):
+            return alarm_action_get_dbus_name(self._obj())
+        def __set__(self, char* value):
+            alarm_action_set_dbus_name(self._obj(), value)
+
+    def set_dbus_args(self, dbus_args=tuple()):
+        cdef int arg_type
+        cdef value arg_value
+
+        if not isinstance(dbus_args, tuple):
+            raise TypeError, "DBUS arguments must be in a tuple."
+        for py_arg in tuple:
+            #detect argument type
+            if isinstance(py_arg, str):
+                arg_type = DBUS_TYPE_STRING
+                arg_value.s = py_arg
+            elif isinstance(py_arg, bool):
+                arg_type = DBUS_TYPE_BOOLEAN
+                arg_value.b = py_arg
+            elif isinstance(py_arg, int):
+                if py_arg < 0:
+                    arg_type = DBUS_TYPE_INT32
+                    arg_value.i = py_arg
+                else:
+                    arg_type = DBUS_TYPE_UINT32
+                    arg_value.u = py_arg
+            elif isinstance(py_arg, float):
+                arg_type = DBUS_TYPE_DOUBLE
+                arg_value.d = py_arg
+            else:
+                arg_type = DBUS_TYPE_INVALID
+                arg_value.i = 0
+            
+            #finally, let's call the function
+            alarm_action_set_dbus_args(<alarm_action_t *>self.obj, arg_type, &arg_value, DBUS_TYPE_INVALID)
+
+    def del_dbus_args(self):
+        alarm_action_del_dbus_args(<alarm_action_t *>self.obj)
+
     property command:
         '''Command to be executed by this action'''
         def __get__(self):
@@ -449,6 +507,43 @@ cdef class Event:
         def __set__(self, long value):
             self._obj().alarm_time = value
 
+    def set_action_dbus_args(self, index, dbus_args=tuple()):
+        cdef int arg_type
+        cdef value arg_value
+
+        if not isinstance(dbus_args, tuple):
+            raise TypeError, "DBUS arguments must be in a tuple."
+        for py_arg in tuple:
+            #detect argument type
+            if isinstance(py_arg, str):
+                arg_type = DBUS_TYPE_STRING
+                arg_value.s = py_arg
+            elif isinstance(py_arg, bool):
+                arg_type = DBUS_TYPE_BOOLEAN
+                arg_value.b = py_arg
+            elif isinstance(py_arg, int):
+                if py_arg < 0:
+                    arg_type = DBUS_TYPE_INT32
+                    arg_value.i = py_arg
+                else:
+                    arg_type = DBUS_TYPE_UINT32
+                    arg_value.u = py_arg
+            elif isinstance(py_arg, float):
+                arg_type = DBUS_TYPE_DOUBLE
+                arg_value.d = py_arg
+            else:
+                arg_type = DBUS_TYPE_INVALID
+                arg_value.i = 0
+            
+            #finally, let's call the function
+            alarm_event_set_action_dbus_args(<alarm_event_t *>self.obj, index, arg_type, &arg_value, DBUS_TYPE_INVALID)
+
+    def get_action_dbus_args(self, index):
+        return alarm_event_get_action_dbus_args(<alarm_event_t *>self.obj, index)
+    
+    def del_action_dbus_args(self, index):
+        alarm_event_del_action_dbus_args(<alarm_event_t *>self.obj, index)
+    
     # The ugly part of adding actions, attributes, etc
 
     def add_actions(self, number):

@@ -1,3 +1,11 @@
+#for DBUS things
+cdef union value:
+    unsigned int u
+    int i
+    int b
+    double d
+    char *s
+
 cdef extern from "string.h":
     ctypedef int size_t
 
@@ -21,8 +29,6 @@ cdef extern from "time.h":
 
     time_t mktime(tm *)
     tm *localtime(time_t *)
-
-
 
 cdef extern from "libalarm.h":
 
@@ -120,6 +126,22 @@ cdef extern from "libalarm.h":
         ALARM_RECUR_SPECIAL_YEARLY
 
 
+cdef extern from "dbus/dbus.h":
+    ctypedef unsigned int dbus_bool_t
+    ctypedef struct DBusMessage
+
+    enum:
+        DBUS_TYPE_STRING
+        DBUS_TYPE_UINT32
+        DBUS_TYPE_INT32
+        DBUS_TYPE_BOOLEAN
+        DBUS_TYPE_DOUBLE
+        DBUS_TYPE_STRING
+        DBUS_TYPE_INVALID
+
+    dbus_bool_t dbus_message_append_args(DBusMessage *message,
+                                         int first_arg_type, ...)
+
     # Global functions
 
     cookie_t alarmd_event_add(alarm_event_t *)
@@ -138,6 +160,22 @@ cdef extern from "libalarm.h":
 
     char *alarm_action_get_label(alarm_action_t *)
     void alarm_action_set_label(alarm_action_t *, char *label)
+
+    char *alarm_action_get_dbus_interface (alarm_action_t *self)
+    void alarm_action_set_dbus_interface (alarm_action_t *self, char* dbus_interface)
+
+    char *alarm_action_get_dbus_service (alarm_action_t *self)
+    void alarm_action_set_dbus_service (alarm_action_t *self, char* dbus_service)
+
+    char *alarm_action_get_dbus_path (alarm_action_t *self)
+    void alarm_action_set_dbus_path (alarm_action_t *self, char* dbus_path)
+    
+    char *alarm_action_get_dbus_name (alarm_action_t *self)
+    void alarm_action_set_dbus_name (alarm_action_t *self, char* dbus_name)
+
+    int alarm_action_set_dbus_args (alarm_action_t *self, int type, ...)
+    void alarm_action_del_dbus_args (alarm_action_t *self)
+
 
     char *alarm_action_get_exec_command(alarm_action_t *)
     void alarm_action_set_exec_command(alarm_action_t *, char *value)
@@ -193,4 +231,7 @@ cdef extern from "libalarm.h":
     alarm_recur_t *alarm_event_get_recurrence(alarm_event_t*, int)
     void alarm_event_del_recurrences(alarm_event_t*)
 
+    int alarm_event_set_action_dbus_args(alarm_event_t *self, int index, int type, ...)
+    char *alarm_event_get_action_dbus_args(alarm_event_t *self, int index)
+    void alarm_event_del_action_dbus_args(alarm_event_t *self, int index)
 
