@@ -158,25 +158,25 @@ cdef class Action(Wrapper):
         def __set__(self, alarmactionflags value):
             self._obj().flags = value
 
-    property interface:
+    property dbus_interface:
         def __get__(self):
             return alarm_action_get_dbus_interface(self._obj())
         def __set__(self, char* value):
             alarm_action_set_dbus_interface(self._obj(), value)
 
-    property service:
+    property dbus_service:
         def __get__(self):
             return alarm_action_get_dbus_service(self._obj())
         def __set__(self, char* value):
             alarm_action_set_dbus_service(self._obj(), value)
 
-    property path:
+    property dbus_path:
         def __get__(self):
             return alarm_action_get_dbus_path(self._obj())
         def __set__(self, char* value):
             alarm_action_set_dbus_path(self._obj(), value)
 
-    property name:
+    property dbus_name:
         def __get__(self):
             return alarm_action_get_dbus_name(self._obj())
         def __set__(self, char* value):
