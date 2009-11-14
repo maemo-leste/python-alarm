@@ -10,6 +10,6 @@ Package: python-alarm
 Architecture: any
 Provides: python2.5-alarm
 Replaces: python2.5-alarm
-Depends: ${shlibs:Depends}
+Depends: ${python:Depends}, ${shlibs:Depends}
 XB-Python-Version: all
 Description: Python bindings for libalarm library

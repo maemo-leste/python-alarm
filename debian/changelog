@@ -1,3 +1,9 @@
+python-alarm (0.1-0maemo2) unstable; urgency=low
+
+  * debian/control: Add missing ${python:Depends}
+
+ -- Anderson Lizardo <anderson.lizardo@openbossa.org>  Sat, 14 Nov 2009 13:45:58 -0400
+
 python-alarm (0.1-0maemo1) unstable; urgency=low
 
   * Initial release of alarmd bindings as a standalone package
