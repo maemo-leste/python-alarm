@@ -10,7 +10,7 @@ import alarm
 
 confirmation_file = '/tmp/dbus_alarm_called.txt'
 
-receiver_source = '''#!/usr/bin/python2.5
+receiver_source = '''#!/usr/bin/python2.7
 
 import gobject
 import dbus
