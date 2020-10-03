@@ -1,3 +1,9 @@
+python-alarm (0.2) unstable; urgency=low
+
+  * Initial Maemo Leste version
+
+ -- Merlijn Wajer <merlijn@wizzup.org>  Sat, 03 Oct 2020 14:07:02 +0200
+
 python-alarm (0.1-0maemo2) unstable; urgency=low
 
   * debian/control: Add missing ${python:Depends}
